@@ -2,7 +2,7 @@
 import requests
 from colorama import Fore, init
 
-init()
+init(strip=False)
 
 URL = "https://www.thecocktaildb.com/api/json/v1/1/random.php"
 r = requests.get(url=URL)
