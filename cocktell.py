@@ -1,31 +1,25 @@
 #!/usr/bin/env python
 import requests
+import textwrap
 from colorama import Fore, init
 
 init(strip=False)
 
 URL = "https://www.thecocktaildb.com/api/json/v1/1/random.php"
-r = requests.get(url=URL)
-data = r.json()
+data = requests.get(url=URL).json()
 
 drink = data["drinks"][0]
-name = drink["strDrink"]
-category = drink["strCategory"]
-instructions = drink["strInstructions"].replace(". ", ".\n ")
+name = f"{Fore.GREEN}{drink['strDrink']}{Fore.RESET}"
+category = f"{Fore.YELLOW}:::{drink['strCategory']}{Fore.RESET}"
+instructions = "\n".join(textwrap.wrap(drink["strInstructions"], width=75, initial_indent=" ", subsequent_indent=" "))
 
-ingredient_list = []
-
-index = 1
-while True:
-    if drink[f"strIngredient{index}"] and index <= 15:
+ingredients_list = []
+for index in range(1, 16):
+    if drink[f"strIngredient{index}"]:
         ingredient = drink[f"strIngredient{index}"]
         measure = drink[f"strMeasure{index}"] or "by ear"
-        entry = f"{ingredient} {Fore.GREEN}~ {Fore.RESET}{measure}"
-        ingredient_list.append(entry)
-        index += 1
-    else:
-        break
+        entry = f"  {Fore.GREEN}°{Fore.RESET} {ingredient} {Fore.GREEN}~ {Fore.RESET}{measure}"
+        ingredients_list.append(entry)
+ingredients = "\n".join(ingredients_list)
 
-print(f"{Fore.GREEN}{name}{Fore.RESET} {Fore.YELLOW}::: {category}{Fore.RESET}\n {instructions}")
-for ingredient in ingredient_list:
-    print(f"  {Fore.GREEN}°{Fore.RESET} {ingredient}")
+print(f"{name} {category}\n{instructions}\n{ingredients}")
