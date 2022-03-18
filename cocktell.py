@@ -22,4 +22,4 @@ for index in range(1, 16):
         ingredients_list.append(entry)
 ingredients = "\n".join(ingredients_list)
 
-print(f"{name} {category}\n{instructions}\n{ingredients}")
+print(f" {name} {category}\n{instructions}\n{ingredients}")
