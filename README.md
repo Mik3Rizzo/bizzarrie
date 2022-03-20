@@ -1,2 +1,3 @@
-# bizzarrie
-Some fun, cute and bizarre code lines.
+# Bizzarrie
+
+Useless things that the world does not yet know it needs.
